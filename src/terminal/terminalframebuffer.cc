@@ -479,7 +479,7 @@ void Renditions::set_rendition( color_type num )
     return;
   }
 
-  bool value = num < 9;
+  bool value = num < 10;
   switch ( num ) {
     case 1:
     case 22:
@@ -504,6 +504,10 @@ void Renditions::set_rendition( color_type num )
     case 8:
     case 28:
       set_attribute( invisible, value );
+      break;
+    case 9:
+    case 29:
+      set_attribute(strikethrough, value);
       break;
     default:
       break; /* ignore unknown rendition */
@@ -546,6 +550,8 @@ std::string Renditions::sgr( void ) const
     ret.append( ";7" );
   if ( get_attribute( invisible ) )
     ret.append( ";8" );
+  if ( get_attribute( strikethrough ) )
+    ret.append( ";9" );
 
   if ( foreground_color ) {
     // Since foreground_color is a 25-bit field, it is promoted to an int when
