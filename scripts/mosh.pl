@@ -116,7 +116,7 @@ qq{Usage: $0 [options] [--] [user@]host [command...]
 
         --ssh=COMMAND        ssh command to run when setting up session
                                 (example: "ssh -p 2222")
-                                (default: "ssh")
+                                (default: "ssh -o CanonicalizeHostname=always")
 
         --no-ssh-pty         do not allocate a pseudo tty on ssh connection
 
@@ -151,6 +151,8 @@ sub predict_check {
     die $usage;
   }
 }
+
+push @ssh, '-o', 'CanonicalizeHostname=always';
 
 GetOptions( 'client=s' => \$client,
 	    'server=s' => \$server,
