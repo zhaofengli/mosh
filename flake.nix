@@ -16,10 +16,11 @@
   in flake-utils.lib.eachSystem supportedSystems (system: let
     pkgs = nixpkgs.legacyPackages.${system};
   in {
+    packages = {
+      mosh = pkgs.callPackage ./nix { };
+    };
     devShell = pkgs.mkShell {
-      nativeBuildInputs = with pkgs; [
-        # Insert dev dependencies here
-      ];
+      inputsFrom = [ self.packages.${system}.mosh ];
     };
   });
 }
